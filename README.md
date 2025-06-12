@@ -255,6 +255,7 @@ Najčešće korišćeni WTForms tipovi polja:
 - *SelectField*: Padajuća lista za izbor jedne vrednosti
 - *TextAreaField*: Višelinijsko tekstualno polje
 - *FileField*: Polje za otpremanje fajlova
+
 *form.hidden_tag()* koji se koristi u HTML-u, u Flask-WTF automatski generiše sva skrivena polja forme, uključujući CSRF token, čime omogućava sigurnu i potpunu obradu forme bez potrebe za ručnim dodavanjem tih polja. Ovo olakšava rad sa skrivenim podacima i poboljšava zaštitu od CSRF napada
 ```
 #Register forma
