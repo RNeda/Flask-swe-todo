@@ -31,6 +31,6 @@ Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije in
 ### Kreiranje projekta u VS Code
 - Napraviti novi folder (npr. flask_app) i otvorite ga u VS Code-u
 - Otvoriti Terminal u VS Code-u i unesite sledeće komande:
-'''
+```
 code
-'''
+```
