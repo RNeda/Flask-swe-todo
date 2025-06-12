@@ -27,7 +27,7 @@ Iako je Flask moćan i često korišćen framework, važno je znati da postoje i
 ## Instalacija Flask-a, kreiranje projekta i njegova struktura
 Za razvoj Flask aplikacija koristi se Python i VS Code kao okruženje. U nastavku su opisani svi koraci potrebni za postavljanje projekta od nule:
 ### Preduslovi
-Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije instaliran može se preuzeti na [https://www.python.org/downloads/](https://www.python.org/downloads/). Takođe treba proveiti da li je *pip* instaliran uz python.
+Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije instaliran može se preuzeti na [https://www.python.org/downloads/](https://www.python.org/downloads/)). Takođe treba proveiti da li je *pip* instaliran uz python.
 ### Kreiranje projekta u VS Code
 - Napraviti novi folder (npr. flask_app) i otvorite ga u VS Code-u
 - Otvoriti Terminal u VS Code-u i unesite sledeće komande:
