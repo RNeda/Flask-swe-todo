@@ -188,6 +188,7 @@ if(__name__) == "__main__":
 
 ### CRUD operacije
 Nakon što su modeli baze kreirani pomoću SQLAlchemy-a u Flask aplikaciji, možemo da implementiramo CRUD operacije (Create, Read, Update, Delete) kako bismo upravljali podacima. SQLAlchemy čini ove operacije intuitivnim i efikasnim, jer omogućava rad sa bazom koristeći Python objekte umesto direktnih SQL upita.
+
 Deo koda za funkciju koja kreira novi objekat:
 ```
 if request.method == 'POST':
@@ -240,6 +241,7 @@ Neke od ključnih karakteristika Flask-WTF-a su:
 - Jednostavno prikazivanje formi – Podržava različite tipove polja kao što su tekstualna polja, čekboksovi i padajuće liste, omogućavajući laku integraciju u HTML.
 - Ugrađena validacija – Podrška za obavezna polja, ograničenja dužine, provere obrasca (pattern matching), kao i prilagođene validacije.
 - Otpremanje fajlova – Omogućava korisnicima da lako otpremaju fajlove putem forme.
+
 Flask-WTF je instaliran na početku tutorijala komandom
 ```pip install flask-WTF ```
 U Flask-WTF, forme se definišu kao klase koje nasleđuju *FlaskForm* klasu. Polja se deklarišu kao promenljive unutar klase, što čini proces pravljenja formi jednostavnim i organizovanim.
