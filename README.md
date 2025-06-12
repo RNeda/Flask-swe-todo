@@ -31,6 +31,154 @@ Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije in
 ### Kreiranje projekta u VS Code
 - Napraviti novi folder (npr. flask_app) i otvorite ga u VS Code-u
 - Otvoriti Terminal u VS Code-u i unesite sledeće komande:
+za instalaciju vituelnog okružena
 ```
-code
+pip install virtualenv 
+```
+za kreiranje vituelnog okružena
+```
+virtualenv env 
+```
+aktivacija virtuelnog okruženja na windows-u. Nakon izvršenja ove komande na početku linije u teminalu treba da se pojavi (env).
+```
+env\Scripts\activate
+```
+instalirati flask i ostale bitne pakete koji će biti objašnjeni u nastavku
+```
+pip install flask 
+pip install flask-sqlalchemy
+pip install flask-wtf
+pip install flask-login
+pip install email-validation
+```
+- napaviti fajl app.py u glavnom folderu i dodajte sledeći kod (hello world app)
+```
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+- Pokrenuti aplikaciju komandom u teminalu ```python app.py``` i otvoriti u pregledaču na adresi http://localhost:5000
+- kada smo se uverili da test aplikacija uspešno radi, u foldeu aplikacije napravimo dva nova foldera:
+  - static/ – za statički sadržaj (CSS, JS, slike, audio, video…)
+  - templates/ – za HTML fajlove (koji se dinamički generišu)
+- Unutar static/ foldera mogu se dalje organizovati fajlovi tako što se naprave podfolderi za css, js, slike..
+- Odatle dalje možemo nadogradjivati našu aplikaciju svime što je potebno
+
+### Templates i static
+Template fajlovi u Flask-u su HTML datoteke koje se koriste za kreiranje dinamičkih web stranica. Flask koristi Jinja2 – moćan šablonski mehanizam koji omogućava ugrađivanje Python logike unutar HTML fajlova. Statički fajlovi poput CSS-a, JavaScript-a i slika čuvaju se odvojeno (u static folderu).
+Jedna od najkorisnijih osobina Flask-a je mogućnost da renderuje HTML pomoću funkcije render_template() iz Jinja2. Umesto da iz ruta vraćamo običan tekst, možemo dinamički prikazivati HTML stranice. Render_template treba importovati u app.py.
+```
+from flask import Flask, render_template
+```
+```
+@app.route('/', methods=['POST', 'GET'])
+def hellopage():
+    return render_template('hellopage.html')
+```
+### Jinja2 za dinamičko generisanje stranica I nasleđivanje šablona
+Flask koristi Jinja2 kao alat za dinamičko generisanje HTML stranica. To znači da možemo u naše HTML fajlove ubaciti Python logiku, kao što su petlje i uslovi. Na taj način ne pišemo isti HTML više puta, već ga 'šablonizujemo' i menjamo sadržaj u zavisnosti od podataka koje prosledimo iz backend-a. Kao što je već rečeno, u templates folder stavljamo HTML fajlove, a u Python ruti koristimo render_template() da ih prikažemo.
+Unutar HTML-a koristimo posebne oznake:
+- {{ }} za prikaz promenljivih (npr: {{ ime }})
+- {% %} za logiku, poput for petlje ili if uslova.(kao što se vidi u index.html)
+Templating sa Jinja2 nam štedi vreme, jer ne moramo da pišemo isti HTML više puta, već jedan šablon koristimo za prikaz različitih podataka.
+Umesto da ponavljamo ceo HTML u svakom fajlu, pomoću Jinja2 možemo da nasleđujemo osnovni šablon i menjamo samo određene delove. Ovo se radi pomoću blokova. Ovo funkcioniše tako što u osnovnom HTML bliku (base.html)definišemo blokove pomoću {% block naziv_bloka %} … {% endblock%}. Onda u drugom HTML fajlu (npr index.html) na početku stavimo {% extends “base.html” %}, dodamo blokove iz base.html I popunjavamo one koje želimo da izmenimo. Prednost je to što sve što se nalazi izvan bloka ostaje isto na svakoj stranici (kao zaglavlje, footer itd), a samo sadržaj unutar bloka se menja – što čini kod čistijim i lakšim za održavanje. Ovo je veoma koristan mehanizam kada pravimo više stranica sa istim izgledom, ali različitim sadržajem.
+Jednostavan prime base.html koju će nasleđivati dugi HTML fajlovi
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+</html>
+
+```
+Primer index.html koji nasleđuje base.html. Unutar blokova head i body možemo dodavati sve ono što će biti jedinstveno za tu stranicu.
+```
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+```
+Kao što je već rečeno, statički fajlovi koji se ne menjaju tokom izvršavanja aplikacije kao što su css, js, slike itd. čuvaju se u static folderu. U HTML fajlovima se statičkim fajlovima pristupa pomoću url_for() funkcije, kao što se može videti u base.html hederu. 
+```
+<link rel=”stylesheet” href=”{{  url_for(‘static’, filename=’css/main.css’) }}”>
+``` 
+Flask automatski servira fajlove iz foldera static, zato je važno da ih tamo pravilno organizujemo (npr. posebni podfolderi za css, js, images i sl). Ovo omogućava da aplikacija izgleda moderno i interaktivno.
+
+### Rutiranje
+Rutiranje aplikacije znači mapiranje URLa na određenu funkciju koja obrađuje potrebnu logiku za taj URL. Flask ima veoma jednostavan sistem rutiranja – rute se definišu pomoću dekoratora  *@app.route(‘’)* koji povezuju URL-ove sa Python funkcijama, što znatno olakšava kontrolu toka aplikacije. Kao parameter dekoratora navodimo konkretnu rutu koju želimo da vežemo za funkciju koja se nalazi ispod ovog dekoratora. Moguće je kroz url poslati I dinamičke podatke I to tako što ćemo koristiti promenljivu u samom URL-u. Da bi dodali promenljivu u URL, koristi se *<variable_name>* pravilo. Funkcija zatim dobija *<variable_name>* kao argument sa tom ključnom reči. Dodatno može se specificirati tip promenljivenavođenjem tipa pre imena promenljive: *<tip:variable_name>*.  Tip može da bude string, int, float, path, uuid.
+Dodatno ako pored same rute dodamo I *methods=[‘POST’,GET’]*, možemo da podesimo koje metode će prihvatiti naša ruta.
+```
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+  #definišemo dalje metodu
+```
+
+### Baza podataka i njena konfiguracija
+Flask nema ugrađen mehanizam za rad sa bazama podataka, pa se oslanja na SQLAlchemy – moćnu biblioteku koja olakšava rad sa bazama. SQLAlchemy pruža Object Relational Mapper (ORM), što omogućava programerima da rade sa bazama koristeći Python kod umesto raw SQL-a.
+Ovo donosi nekoliko prednosti:
+- Pojednostavljuje upravljanje bazom podataka
+- Poboljšava bezbednost
+- Podržava više sistema baza podataka kao što su SQLite, MySQL i PostgreSQL
+- Lako se integriše sa Flask-om putem ekstenzije Flask-SQLAlchemy
+Već na samom početku ovog tutorijala je instalirana SQLAlchemy ekstenzija pomoći ```pip install flask-sqlalchemy```
+Kako bismo keirali bazu neophodno je da importujemo SQLAlchemy u app.py, postavimo sqlite konfiguraciju I kreiramo instance baze. Nakon inicijalizovanja baze I kreiranja njene instance neophodno je da napravimo modele koji će omogućiti komunikaciju sa bazom.
+```
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+import os 
+
+file_path = os.path.abspath(os.getcwd())+"/baza.db" 
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path 
+db = SQLAlchemy(app)
+```
+
+###Modeli
+U Flasku, modeli predstavljaju strukturu podataka i omogućavaju rad sa bazom podataka. Oni omogućavaju programerima da komuniciraju sa bazom koristeći objektno-orijentisano programiranje, umesto da pišu raw SQL upite. Modeli pojednostavljuju rad sa bazom tako što pretvaraju tabele u Python klase, a redove iz baze u objekte. Na taj način, definiše se kako se podaci čuvaju, preuzimaju i upravljaju u aplikaciji pomoću ORM-a (Object Relational Mapping). Modeli u Flasku mogu da rade sa različitim bazama podataka, kao što su SQL, SQLite i mnoge druge.
+```
+class Todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.now) 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Task %r>' % self.id
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    tasks = db.relationship('Todo', backref='author', lazy=True)
+
+    def __repr__(self):
+        return '<user %r>' % self.id
+```
+Kada smo kreirali modele sa svim neophodnim parametrima za svaku kolonu u tabeli, treba kreirati samu bazu podataka. To se radi tako što se u delu gde se pokreće aplikacija doda *db.create_all()*
+```
+if(__name__) == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
 ```
