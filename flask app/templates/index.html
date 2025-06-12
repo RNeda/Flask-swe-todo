@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Moja to do lista</title>
+{% endblock %}
+
+{% block body %}
+<div class="todo-container">
+    <h1>Moja to do lista - {{ current_user.username }}</h1>
+
+    {% if tasks|length < 1 %}
+        <h4 class="no-tasks">Još uvek nema zadataka. Dodaj ih!</h4>
+    {% else %}
+        <table class="todo-table">
+            <tr>
+                <th>Zadatak</th>
+                <th>Datum dodavanja</th>
+                <th>Akcija</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="/update/{{ task.id }}">Uredi</a><br>
+                    <a href="/delete/{{ task.id }}">Obriši</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <div class="form">
+        <form action="/index" method="POST">
+            <input type="text" name="content" id="content" placeholder="Unesi novi zadatak">
+            <input type="submit" value="Dodaj" class="submit-btn">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
