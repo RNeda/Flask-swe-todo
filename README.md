@@ -2,7 +2,7 @@
 ## Opis problema
 Ovaj projekat predstavlja jednostavnu To-Do aplikaciju razvijenu korišćenjem Flask framework-a. Kroz ovu aplikaciju prikazane su osnovne mogućnosti Flask-a, uključujući rad sa rutama, formama i sesijama. Aplikacija omogućava registraciju i prijavu korisnika, nakon čega autentifikovani korisnici mogu da kreiraju svoju To-Do listu. Ulogovani korisnici imaju mogućnost dodavanja, uređivanja i brisanja zadataka.
 
-## ŠTA JE FLASK?
+## Šta je Flask?
 Flask je popularan, lightweight i fleksibilan web framework zasnovan na Python programskom jeziku. Spada u kategoriju mikro framework-a, što znači da dolazi sa minimalnim ugrađenim setom funkcionalnosti, ali omogućava lako proširivanje u skladu sa potrebama projekta. Idealan je za brzo razvijanje web aplikacija i REST API-ja, a zahvaljujući svojoj jednostavnosti i maloj početnoj složenosti, posebno je pogodan za početnike u web programiranju. Iako je odličan za manje projekte i brze prototipe, dovoljno je moćan i fleksibilan da se koristi i za razvoj kompleksnijih aplikacija.
 
 ### Ključne karakteristike Flask-a i zašto ga koristiti 
