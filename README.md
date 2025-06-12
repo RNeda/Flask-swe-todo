@@ -20,11 +20,17 @@ Flask je popularan, lightweight i fleksibilan web framework zasnovan na Python p
 - Baza podataka po izboru - Može se koristiti sa bilo kojom bazom podataka, uključujući i relacione (SQL) i nerelacione (NoSQL) baze.
 - Frontend po izboru - Flask se može kombinovati sa bilo kojom frontend tehnologijom – kao što su Angular, React ili klasičan HTML/CSS/JS.
 
-###Konkurentska rešenja
+### Konkurentska rešenja
 Iako je Flask moćan i često korišćen framework, važno je znati da postoje i druga konkurentska rešenja za razvoj web aplikacija, kao što je Django. Flask je mikro-framework koji dolazi sa minimalnim skupom ugrađenih funkcionalnosti i pruža veliku fleksibilnost pri razvoju, dok je Django full-stack framework koji uključuje mnoge gotove alate i striktno definisanu strukturu projekta. Django je pogodan za veće i kompleksnije aplikacije koje zahtevaju brzu implementaciju sigurnosti, autentifikacije, ORM-a i drugih funkcionalnosti „iz kutije“. Sa druge strane, Flask omogućava potpunu kontrolu nad arhitekturom aplikacije, pa je idealan za male i srednje projekte, brze prototipe i sve situacije kada je potrebna veća sloboda u izboru biblioteka i strukture koda. Takođe, zbog svoje jednostavnosti i intuitivnog API-ja, Flask je odličan izbor za početnike koji tek ulaze u svet web developmenta. Ukratko, ako je cilj brza i jednostavna implementacija sa visokim nivoom prilagodljivosti – Flask je pravi izbor. Dok je Django bolja opcija kada želimo kompletno rešenje za kompleksne aplikacije.
 
 
-##Instalacija Flask-a, kreiranje projekta i njegova struktura
+## Instalacija Flask-a, kreiranje projekta i njegova struktura
 Za razvoj Flask aplikacija koristi se Python i VS Code kao okruženje. U nastavku su opisani svi koraci potrebni za postavljanje projekta od nule:
-###Preduslovi
+### Preduslovi
 Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije instaliran može se preuzeti na [https://www.python.org/downloads/](https://www.python.org/downloads/). Takođe treba proveiti da li je *pip* instaliran uz python.
+### Kreiranje projekta u VS Code
+- Napraviti novi folder (npr. flask_app) i otvorite ga u VS Code-u
+- Otvoriti Terminal u VS Code-u i unesite sledeće komande:
+'''
+code
+'''
