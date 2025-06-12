@@ -13,3 +13,8 @@ Flask je popularan, lightweight i fleksibilan web framework zasnovan na Python p
 - Jinja2 templating engine - Flask koristi Jinja2 kao svoj sistem za šablone, što omogućava ubacivanje Python logike direktno u HTML fajlove i dinamičko generisanje sadržaja.
 - Werkzeug - Za upravljanje HTTP zahtevima i odgovorima, Flask se oslanja na Werkzeug – robustan WSGI alat koji omogućava pouzdano upravljanje web server komunikacijom.
 - Proširivost - Flask se lako prilagođava rastu projekta. Podržava integraciju sa brojnim popularnim bibliotekama i ekstenzijama, kao što su:
+  - Flask-SQLAlchemy – za rad sa bazama podataka
+  - Flask-Login – za autentifikaciju korisnika
+  - Flask-WTF – za validaciju formi
+  - Flask-Mail – za slanje e-mail poruka
+  
