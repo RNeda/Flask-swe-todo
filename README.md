@@ -31,6 +31,7 @@ Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije in
 ### Kreiranje projekta u VS Code
 - Napraviti novi folder (npr. flask_app) i otvoriti ga u VS Code-u
 - Otvoriti Terminal u VS Code-u i uneti sledeće komande:
+
 za instalaciju vituelnog okružena
 ```
 pip install virtualenv 
