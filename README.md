@@ -86,7 +86,8 @@ def hellopage():
 Flask koristi Jinja2 kao alat za dinamičko generisanje HTML stranica. To znači da možemo u naše HTML fajlove ubaciti Python logiku, kao što su petlje i uslovi. Na taj način ne pišemo isti HTML više puta, već ga 'šablonizujemo' i menjamo sadržaj u zavisnosti od podataka koje prosledimo iz backend-a. Kao što je već rečeno, u templates folder stavljamo HTML fajlove, a u Python ruti koristimo render_template() da ih prikažemo.
 Unutar HTML-a koristimo posebne oznake:
 - {{ }} za prikaz promenljivih (npr: {{ ime }})
-- {% %} za logiku, poput for petlje ili if uslova.(kao što se vidi u index.html)
+- {% %} za logiku, poput for petlje ili if uslova
+
 Templating sa Jinja2 nam štedi vreme, jer ne moramo da pišemo isti HTML više puta, već jedan šablon koristimo za prikaz različitih podataka.
 Umesto da ponavljamo ceo HTML u svakom fajlu, pomoću Jinja2 možemo da nasleđujemo osnovni šablon i menjamo samo određene delove. Ovo se radi pomoću blokova. Ovo funkcioniše tako što u osnovnom HTML bliku (base.html)definišemo blokove pomoću {% block naziv_bloka %} … {% endblock%}. Onda u drugom HTML fajlu (npr index.html) na početku stavimo {% extends “base.html” %}, dodamo blokove iz base.html I popunjavamo one koje želimo da izmenimo. Prednost je to što sve što se nalazi izvan bloka ostaje isto na svakoj stranici (kao zaglavlje, footer itd), a samo sadržaj unutar bloka se menja – što čini kod čistijim i lakšim za održavanje. Ovo je veoma koristan mehanizam kada pravimo više stranica sa istim izgledom, ali različitim sadržajem.
 Jednostavan prime base.html koju će nasleđivati dugi HTML fajlovi
