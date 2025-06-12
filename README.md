@@ -140,6 +140,7 @@ Ovo donosi nekoliko prednosti:
 - Poboljšava bezbednost
 - Podržava više sistema baza podataka kao što su SQLite, MySQL i PostgreSQL
 - Lako se integriše sa Flask-om putem ekstenzije Flask-SQLAlchemy
+
 Već na samom početku ovog tutorijala je instalirana SQLAlchemy ekstenzija pomoću ```pip install flask-sqlalchemy```
 Kako bismo kreirali bazu neophodno je da importujemo SQLAlchemy u app.py, postavimo sqlite konfiguraciju I kreiramo instance baze. Nakon inicijalizovanja baze I kreiranja njene instance neophodno je da napravimo modele koji će omogućiti komunikaciju sa bazom.
 ```
