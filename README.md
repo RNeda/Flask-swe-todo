@@ -153,7 +153,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
 db = SQLAlchemy(app)
 ```
 
-###Modeli
+### Modeli
 U Flasku, modeli predstavljaju strukturu podataka i omogućavaju rad sa bazom podataka. Oni omogućavaju programerima da komuniciraju sa bazom koristeći objektno-orijentisano programiranje, umesto da pišu raw SQL upite. Modeli pojednostavljuju rad sa bazom tako što pretvaraju tabele u Python klase, a redove iz baze u objekte. Na taj način, definiše se kako se podaci čuvaju, preuzimaju i upravljaju u aplikaciji pomoću ORM-a (Object Relational Mapping). Modeli u Flasku mogu da rade sa različitim bazama podataka, kao što su SQL, SQLite i mnoge druge.
 ```
 class Todo(db.Model):
@@ -182,3 +182,86 @@ if(__name__) == "__main__":
         db.create_all()
     app.run(debug=True)
 ```
+
+### CRUD operacije
+Nakon što su modeli baze kreirani pomoću SQLAlchemy-a u Flask aplikaciji, možemo da implementiramo CRUD operacije (Create, Read, Update, Delete) kako bismo upravljali podacima. SQLAlchemy čini ove operacije intuitivnim i efikasnim, jer omogućava rad sa bazom koristeći Python objekte umesto direktnih SQL upita.
+```
+if request.method == 'POST':
+        task_content = request.form['content']
+        new_task = Todo(content=task_content, user_id=current_user.id)
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return 'There was an issue adding your task'
+```
+```
+@app.route('/delete/<int:id>')
+def delete(id):
+    task_to_delete = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        return 'There was a problem deleting that task'
+```
+```
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    task = Todo.query.get_or_404(id)
+
+    if request.method == 'POST':
+        task.content = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect(url_for('index'))
+        except:
+            return 'There was an issue updating your task'
+
+    else:
+        return render_template('update.html', task=task)
+```
+
+### Flask-WTF
+Flask-WTF je ekstenzija za Flask koja integriše biblioteku WTForms, olakšavajući kreiranje i validaciju formi u Flask aplikacijama. Omogućava strukturisan način za pravljenje formi, njihovu validaciju i prikazivanje u HTML-u.
+Neke od ključnih karakteristika Flask-WTF-a su:
+- Bezbedno upravljanje formama – Automatski upravlja CSRF zaštitom kako bi se sprečila neautorizovana slanja formi.
+- Jednostavno prikazivanje formi – Podržava različite tipove polja kao što su tekstualna polja, čekboksovi i padajuće liste, omogućavajući laku integraciju u HTML.
+- Ugrađena validacija – Podrška za obavezna polja, ograničenja dužine, provere obrasca (pattern matching), kao i prilagođene validacije.
+- Otpremanje fajlova – Omogućava korisnicima da lako otpremaju fajlove putem forme.
+Flask-WTF je instaliran na početku tutorijala komandom
+```pip install flask-WTF ```
+U Flask-WTF, forme se definišu kao klase koje nasleđuju *FlaskForm* klasu. Polja se deklarišu kao promenljive unutar klase, što čini proces pravljenja formi jednostavnim i organizovanim.
+Najčešće korišćeni WTForms tipovi polja:
+- *StringField*: Tekstualno polje za unos stringova.
+- *PasswordField*: Polje za unos lozinke.
+- *BooleanField*: Čekboks za izbor između tačno/netačno (True/False).
+- *DecimalField*: Polje za unos decimalnih vrednosti.
+- *RadioField*: Grupa radio dugmadi za izbor jedne opcije.
+- *SelectField*: Padajuća lista za izbor jedne vrednosti.
+- *TextAreaField*: Višelinijsko tekstualno polje.
+- *FileField*: Polje za otpremanje fajlova.
+*form.hidden_tag()* koji se koristi u HTML-u, u Flask-WTF automatski generiše sva skrivena polja forme, uključujući CSRF token, čime omogućava sigurnu i potpunu obradu forme bez potrebe za ručnim dodavanjem tih polja. Ovo olakšava rad sa skrivenim podacima i poboljšava zaštitu od CSRF napada
+```
+#Register forma
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=25)])
+    email = EmailField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4)])
+    confirm_password = PasswordField('Confirm Password', validators=[
+        InputRequired(), EqualTo('password', message='Passwords must match')
+    ])
+    submit = SubmitField('Register')
+
+#Login forma
+class LoginForm(FlaskForm):
+    email = EmailField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired()])
+    submit = SubmitField('Login')
+```
+
