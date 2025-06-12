@@ -29,8 +29,8 @@ Za razvoj Flask aplikacija koristi se Python i VS Code kao okruženje. U nastavk
 ### Preduslovi
 Pre keiranja projekta podrazumeva se da imamo instaliran Python (ukoliko nije instaliran može se preuzeti na [https://www.python.org/downloads/](https://www.python.org/downloads/)). Takođe treba proveiti da li je *pip* instaliran uz python.
 ### Kreiranje projekta u VS Code
-- Napraviti novi folder (npr. flask_app) i otvorite ga u VS Code-u
-- Otvoriti Terminal u VS Code-u i unesite sledeće komande:
+- Napraviti novi folder (npr. flask_app) i otvoriti ga u VS Code-u
+- Otvoriti Terminal u VS Code-u i uneti sledeće komande:
 za instalaciju vituelnog okružena
 ```
 pip install virtualenv 
@@ -39,7 +39,7 @@ za kreiranje vituelnog okružena
 ```
 virtualenv env 
 ```
-aktivacija virtuelnog okruženja na windows-u. Nakon izvršenja ove komande na početku linije u teminalu treba da se pojavi (env).
+aktivacija virtuelnog okruženja na windows-u. Nakon izvršenja ove komande na početku linije u teminalu treba da se pojavi (env)
 ```
 env\Scripts\activate
 ```
@@ -49,9 +49,9 @@ pip install flask
 pip install flask-sqlalchemy
 pip install flask-wtf
 pip install flask-login
-pip install email-validation
+pip install email-validator
 ```
-- napaviti fajl app.py u glavnom folderu i dodajte sledeći kod (hello world app)
+- napaviti fajl app.py u glavnom folderu i dodati sledeći kod (hello world app)
 ```
 from flask import Flask
 
@@ -65,15 +65,15 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 - Pokrenuti aplikaciju komandom u teminalu ```python app.py``` i otvoriti u pregledaču na adresi http://localhost:5000
-- kada smo se uverili da test aplikacija uspešno radi, u foldeu aplikacije napravimo dva nova foldera:
+- Kada smo se uverili da test aplikacija uspešno radi, u folderu aplikacije napravimo dva nova foldera:
   - static/ – za statički sadržaj (CSS, JS, slike, audio, video…)
   - templates/ – za HTML fajlove (koji se dinamički generišu)
 - Unutar static/ foldera mogu se dalje organizovati fajlovi tako što se naprave podfolderi za css, js, slike..
-- Odatle dalje možemo nadogradjivati našu aplikaciju svime što je potebno
+- Odatle dalje možemo nadograđivati našu aplikaciju svime što je potebno
 
 ### Templates i static
 Template fajlovi u Flask-u su HTML datoteke koje se koriste za kreiranje dinamičkih web stranica. Flask koristi Jinja2 – moćan šablonski mehanizam koji omogućava ugrađivanje Python logike unutar HTML fajlova. Statički fajlovi poput CSS-a, JavaScript-a i slika čuvaju se odvojeno (u static folderu).
-Jedna od najkorisnijih osobina Flask-a je mogućnost da renderuje HTML pomoću funkcije render_template() iz Jinja2. Umesto da iz ruta vraćamo običan tekst, možemo dinamički prikazivati HTML stranice. Render_template treba importovati u app.py.
+Jedna od najkorisnijih osobina Flask-a je mogućnost da renderuje HTML pomoću funkcije *render_template()* iz Jinja2. Umesto da iz ruta vraćamo običan tekst, možemo dinamički prikazivati HTML stranice. *Render_template* treba importovati u app.py.
 ```
 from flask import Flask, render_template
 ```
@@ -82,15 +82,15 @@ from flask import Flask, render_template
 def hellopage():
     return render_template('hellopage.html')
 ```
-### Jinja2 za dinamičko generisanje stranica I nasleđivanje šablona
-Flask koristi Jinja2 kao alat za dinamičko generisanje HTML stranica. To znači da možemo u naše HTML fajlove ubaciti Python logiku, kao što su petlje i uslovi. Na taj način ne pišemo isti HTML više puta, već ga 'šablonizujemo' i menjamo sadržaj u zavisnosti od podataka koje prosledimo iz backend-a. Kao što je već rečeno, u templates folder stavljamo HTML fajlove, a u Python ruti koristimo render_template() da ih prikažemo.
+### Jinja2 za dinamičko generisanje stranica i nasleđivanje šablona
+Flask koristi Jinja2 kao alat za dinamičko generisanje HTML stranica. To znači da možemo u naše HTML fajlove ubaciti Python logiku, kao što su petlje i uslovi. Na taj način ne pišemo isti HTML više puta, već ga 'šablonizujemo' i menjamo sadržaj u zavisnosti od podataka koje prosledimo iz backend-a. Kao što je već rečeno, u templates/ folder stavljamo HTML fajlove, a u Python ruti koristimo *render_template()* da ih prikažemo.
 Unutar HTML-a koristimo posebne oznake:
 - {{ }} za prikaz promenljivih (npr: {{ ime }})
 - {% %} za logiku, poput for petlje ili if uslova
 
 Templating sa Jinja2 nam štedi vreme, jer ne moramo da pišemo isti HTML više puta, već jedan šablon koristimo za prikaz različitih podataka.
-Umesto da ponavljamo ceo HTML u svakom fajlu, pomoću Jinja2 možemo da nasleđujemo osnovni šablon i menjamo samo određene delove. Ovo se radi pomoću blokova. Ovo funkcioniše tako što u osnovnom HTML bliku (base.html)definišemo blokove pomoću {% block naziv_bloka %} … {% endblock%}. Onda u drugom HTML fajlu (npr index.html) na početku stavimo {% extends “base.html” %}, dodamo blokove iz base.html I popunjavamo one koje želimo da izmenimo. Prednost je to što sve što se nalazi izvan bloka ostaje isto na svakoj stranici (kao zaglavlje, footer itd), a samo sadržaj unutar bloka se menja – što čini kod čistijim i lakšim za održavanje. Ovo je veoma koristan mehanizam kada pravimo više stranica sa istim izgledom, ali različitim sadržajem.
-Jednostavan prime base.html koju će nasleđivati dugi HTML fajlovi
+Umesto da ponavljamo ceo HTML u svakom fajlu, pomoću Jinja2 možemo da nasleđujemo osnovni šablon i menjamo samo određene delove. Ovo se radi pomoću blokova i funkcioniše tako što u osnovnom HTML fajlu (base.html) definišemo blokove pomoću *{% block naziv_bloka %} … {% endblock%}*. Onda u drugom HTML fajlu (npr index.html) na početku stavimo *{% extends “base.html” %}*, dodamo blokove iz base.html I popunjavamo one koje želimo da izmenimo. Prednost je to što sve što se nalazi izvan bloka ostaje isto na svakoj stranici (zaglavlje, footer itd), a samo sadržaj unutar bloka se menja – što čini kod čistijim i lakšim za održavanje. Ovo je veoma koristan mehanizam kada pravimo više stranica sa istim izgledom, ali različitim sadržajem.
+Jednostavan prime base.html koju će nasleđivati drugi HTML fajlovi
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -117,14 +117,15 @@ Primer index.html koji nasleđuje base.html. Unutar blokova head i body možemo 
 {% block body %}
 {% endblock %}
 ```
-Kao što je već rečeno, statički fajlovi koji se ne menjaju tokom izvršavanja aplikacije kao što su css, js, slike itd. čuvaju se u static folderu. U HTML fajlovima se statičkim fajlovima pristupa pomoću url_for() funkcije, kao što se može videti u base.html hederu. 
+
+Kao što je već rečeno, statički fajlovi koji se ne menjaju tokom izvršavanja aplikacije kao što su css, js, slike itd. čuvaju se u static folderu. U HTML fajlovima se statičkim fajlovima pristupa pomoću *url_for()* funkcije, kao što se može videti u base.html hederu. 
 ```
 <link rel=”stylesheet” href=”{{  url_for(‘static’, filename=’css/main.css’) }}”>
 ``` 
 Flask automatski servira fajlove iz foldera static, zato je važno da ih tamo pravilno organizujemo (npr. posebni podfolderi za css, js, images i sl). Ovo omogućava da aplikacija izgleda moderno i interaktivno.
 
 ### Rutiranje
-Rutiranje aplikacije znači mapiranje URLa na određenu funkciju koja obrađuje potrebnu logiku za taj URL. Flask ima veoma jednostavan sistem rutiranja – rute se definišu pomoću dekoratora  *@app.route(‘’)* koji povezuju URL-ove sa Python funkcijama, što znatno olakšava kontrolu toka aplikacije. Kao parameter dekoratora navodimo konkretnu rutu koju želimo da vežemo za funkciju koja se nalazi ispod ovog dekoratora. Moguće je kroz url poslati I dinamičke podatke I to tako što ćemo koristiti promenljivu u samom URL-u. Da bi dodali promenljivu u URL, koristi se *<variable_name>* pravilo. Funkcija zatim dobija *<variable_name>* kao argument sa tom ključnom reči. Dodatno može se specificirati tip promenljivenavođenjem tipa pre imena promenljive: *<tip:variable_name>*.  Tip može da bude string, int, float, path, uuid.
+Rutiranje aplikacije znači mapiranje URLa na određenu funkciju koja obrađuje potrebnu logiku za taj URL. Flask ima veoma jednostavan sistem rutiranja – rute se definišu pomoću dekoratora  *@app.route()* koji povezuju URL-ove sa Python funkcijama, što znatno olakšava kontrolu toka aplikacije. Kao parameter dekoratora navodimo konkretnu rutu koju želimo da vežemo za funkciju koja se nalazi ispod ovog dekoratora. Moguće je kroz URL poslati I dinamičke podatke I to tako što ćemo koristiti promenljivu u samom URL-u. Da bi dodali promenljivu u URL, koristi se *<variable_name>* pravilo. Funkcija zatim dobija *<variable_name>* kao argument sa tom ključnom reči. Dodatno može se specificirati tip promenljive navođenjem tipa pre imena promenljive: *<tip:variable_name>*.  Tip može da bude string, int, float, path, uuid.
 Dodatno ako pored same rute dodamo I *methods=[‘POST’,GET’]*, možemo da podesimo koje metode će prihvatiti naša ruta.
 ```
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -139,8 +140,8 @@ Ovo donosi nekoliko prednosti:
 - Poboljšava bezbednost
 - Podržava više sistema baza podataka kao što su SQLite, MySQL i PostgreSQL
 - Lako se integriše sa Flask-om putem ekstenzije Flask-SQLAlchemy
-Već na samom početku ovog tutorijala je instalirana SQLAlchemy ekstenzija pomoći ```pip install flask-sqlalchemy```
-Kako bismo keirali bazu neophodno je da importujemo SQLAlchemy u app.py, postavimo sqlite konfiguraciju I kreiramo instance baze. Nakon inicijalizovanja baze I kreiranja njene instance neophodno je da napravimo modele koji će omogućiti komunikaciju sa bazom.
+Već na samom početku ovog tutorijala je instalirana SQLAlchemy ekstenzija pomoću ```pip install flask-sqlalchemy```
+Kako bismo kreirali bazu neophodno je da importujemo SQLAlchemy u app.py, postavimo sqlite konfiguraciju I kreiramo instance baze. Nakon inicijalizovanja baze I kreiranja njene instance neophodno je da napravimo modele koji će omogućiti komunikaciju sa bazom.
 ```
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -186,6 +187,7 @@ if(__name__) == "__main__":
 
 ### CRUD operacije
 Nakon što su modeli baze kreirani pomoću SQLAlchemy-a u Flask aplikaciji, možemo da implementiramo CRUD operacije (Create, Read, Update, Delete) kako bismo upravljali podacima. SQLAlchemy čini ove operacije intuitivnim i efikasnim, jer omogućava rad sa bazom koristeći Python objekte umesto direktnih SQL upita.
+Deo koda za funkciju koja kreira novi objekat:
 ```
 if request.method == 'POST':
         task_content = request.form['content']
@@ -198,6 +200,7 @@ if request.method == 'POST':
         except:
             return 'There was an issue adding your task'
 ```
+Brisanje objekta:
 ```
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -210,6 +213,7 @@ def delete(id):
     except:
         return 'There was a problem deleting that task'
 ```
+Ažuriranje objekta:
 ```
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -239,14 +243,14 @@ Flask-WTF je instaliran na početku tutorijala komandom
 ```pip install flask-WTF ```
 U Flask-WTF, forme se definišu kao klase koje nasleđuju *FlaskForm* klasu. Polja se deklarišu kao promenljive unutar klase, što čini proces pravljenja formi jednostavnim i organizovanim.
 Najčešće korišćeni WTForms tipovi polja:
-- *StringField*: Tekstualno polje za unos stringova.
-- *PasswordField*: Polje za unos lozinke.
-- *BooleanField*: Čekboks za izbor između tačno/netačno (True/False).
-- *DecimalField*: Polje za unos decimalnih vrednosti.
-- *RadioField*: Grupa radio dugmadi za izbor jedne opcije.
-- *SelectField*: Padajuća lista za izbor jedne vrednosti.
-- *TextAreaField*: Višelinijsko tekstualno polje.
-- *FileField*: Polje za otpremanje fajlova.
+- *StringField*: Tekstualno polje za unos stringova
+- *PasswordField*: Polje za unos lozinke
+- *BooleanField*: Čekboks za izbor između tačno/netačno (True/False)
+- *DecimalField*: Polje za unos decimalnih vrednosti
+- *RadioField*: Grupa radio dugmadi za izbor jedne opcije
+- *SelectField*: Padajuća lista za izbor jedne vrednosti
+- *TextAreaField*: Višelinijsko tekstualno polje
+- *FileField*: Polje za otpremanje fajlova
 *form.hidden_tag()* koji se koristi u HTML-u, u Flask-WTF automatski generiše sva skrivena polja forme, uključujući CSRF token, čime omogućava sigurnu i potpunu obradu forme bez potrebe za ručnim dodavanjem tih polja. Ovo olakšava rad sa skrivenim podacima i poboljšava zaštitu od CSRF napada
 ```
 #Register forma
